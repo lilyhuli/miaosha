@@ -1,7 +1,10 @@
 package cn.lilyhuli.controller;
 
+import cn.lilyhuli.domain.User;
 import cn.lilyhuli.result.CodeMsg;
 import cn.lilyhuli.result.Result;
+import cn.lilyhuli.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/demo")
 public class DemoController {
+
+    @Autowired
+    private UserService userService;
     @RequestMapping("/")
     @ResponseBody
     String home() {
@@ -35,4 +41,11 @@ public class DemoController {
         model.addAttribute("name", "lilyhuli");
         return "hello";
     }
+    @RequestMapping("/get/user")
+    @ResponseBody
+    public Result<User> getUser(){
+        User user = userService.getById(1);
+        return Result.success(user);
+    }
+
 }
