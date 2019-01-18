@@ -4,6 +4,8 @@ import cn.lilyhuli.domain.User;
 import cn.lilyhuli.result.CodeMsg;
 import cn.lilyhuli.result.Result;
 import cn.lilyhuli.service.UserService;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ public class DemoController {
 
     @Autowired
     private UserService userService;
+
+
     @RequestMapping("/")
     @ResponseBody
     String home() {
@@ -47,5 +51,14 @@ public class DemoController {
         User user = userService.getById(1);
         return Result.success(user);
     }
+
+    @RequestMapping("text/tx")
+    @ResponseBody
+    public Result<Boolean> textTx(){
+        userService.tx();
+        return Result.success(true);
+    }
+
+
 
 }
