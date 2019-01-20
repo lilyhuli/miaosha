@@ -48,6 +48,7 @@ public class RedisService {
 			 if(seconds <= 0) {
 				 jedis.set(realKey, str);
 			 }else {
+			 	//先设置一个值 然后设置一个过期时间
 				 jedis.setex(realKey, seconds, str);
 			 }
 			 return true;
@@ -70,9 +71,9 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
 	/**
-	 * 增加值
+	 * 增加值 原子操作
 	 * */
 	public <T> Long incr(KeyPrefix prefix, String key) {
 		 Jedis jedis = null;
@@ -87,7 +88,7 @@ public class RedisService {
 	}
 	
 	/**
-	 * 减少值
+	 * 减少值 原子操作
 	 * */
 	public <T> Long decr(KeyPrefix prefix, String key) {
 		 Jedis jedis = null;
