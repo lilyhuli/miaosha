@@ -12,4 +12,7 @@
 
 自己封装的jedis更易使用 使用jedisTemplate主要是spring给了cache功能，这里直接自己封装的。
 
+使用validation 校验
+
+两次md5 加盐 加密
 未完待续。
