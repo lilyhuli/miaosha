@@ -9,6 +9,7 @@ import cn.lilyhuli.result.CodeMsg;
 import cn.lilyhuli.util.MD5Util;
 import cn.lilyhuli.util.UUIDUtil;
 import cn.lilyhuli.vo.LoginVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,18 @@ public class MiaoshaUserService {
 
     public MiaoshaUser getById(long id) {
         return miaoshaUserDao.getById(id);
+    }
+
+    public MiaoshaUser getByToken(HttpServletResponse response, String token) {
+        if(StringUtils.isEmpty(token)) {
+            return null;
+        }
+        MiaoshaUser user = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
+        //延长有效期
+        if(user != null) {
+            addCookie(response, token, user);
+        }
+        return user;
     }
 
     public boolean login(HttpServletResponse response, LoginVo loginVo) {
